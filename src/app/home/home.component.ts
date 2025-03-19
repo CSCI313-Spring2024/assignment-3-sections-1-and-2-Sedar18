@@ -14,8 +14,22 @@ export class HomeComponent {
   housingLocationList: HousingLocation[] = [];
   // Injecting HousingService into the Component
   housingService: HousingService = inject(HousingService);
+  filteredLocationList: HousingLocation[] = [];
   constructor(){
   //setting housingLocationlist to the data array in HousingService
   this.housingLocationList = this.housingService.getAllHousingLocations();
+  //setting initial filteredLocationList to the housingLocationList.
+  this.filteredLocationList = this.housingLocationList;
+  }
+  //method to filter the housinglocations based on the search term.
+  filterResults(text:string){
+  if (!text) {
+  this.filteredLocationList = this.housingLocationList;
+  return;
+  }
+  this.filteredLocationList = this.housingLocationList.filter((housingLocation) =>
+  housingLocation?.city.toLowerCase().includes(text.toLowerCase()),
+  );
   }
   }
+  
